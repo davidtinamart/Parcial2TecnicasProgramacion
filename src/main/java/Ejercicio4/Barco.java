@@ -3,16 +3,16 @@ package Ejercicio4;
 import java.awt.*;
 
 public class Barco {
-    // atributos
+    // Atributos
     protected int tamano;
-    protected int hits;
+    protected int golpes;
     protected Point inicio;
     protected Point fin;
 
-    // constructor
+    // Constructor
     public Barco(int size, Point inicio, Point fin) {
         this.tamano = size;
-        this.hits = 0;
+        this.golpes = 0;
         this.inicio = inicio;
         this.fin = fin;
     }
@@ -23,7 +23,7 @@ public class Barco {
     }
 
     public int getHits() {
-        return hits;
+        return golpes;
     }
 
     public Point getStart() {
@@ -34,19 +34,19 @@ public class Barco {
         return fin;
     }
 
-    public void setHits(int hits) {
-        this.hits = hits;
+    public void setHits(int golpes) {
+        this.golpes = golpes;
     }
 
     // Metodo is_sunk que devuelve true si el barco está hundido
     public boolean is_sunk() {
-        return hits == tamano; // si el numero de hits es igual al tamaño del barco, el barco está hundido
+        return golpes == tamano; // si el numero de hits es igual al tamaño del barco, el barco está hundido
     }
 
     // Metodo get_shot que recibe un punto y comprueba si está entre los puntos de inicio y fin
     public void get_shot(Point shot_point) {
         if (is_between(inicio, fin, shot_point)) {
-            hits++;
+            golpes++;
         }
     }
 
