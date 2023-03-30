@@ -6,22 +6,22 @@ import java.util.ArrayList;
 public class Usuario {
     // Atributos
 
-    private ArrayList<Barco> ships;
+    private ArrayList<Barco> barcos;
     private boolean esta_vivo;
 
     // Metodo Constructor que recibe un array de barcos y comprueba que no sea nulo o vacío
 
-    public Usuario(ArrayList<Barco> ships) throws IllegalArgumentException {
-        if (ships == null || ships.isEmpty()) {
+    public Usuario(ArrayList<Barco> barcos) throws IllegalArgumentException {
+        if (barcos == null || barcos.isEmpty()) {
             throw new IllegalArgumentException("Debe haber al menos un barco para el usuario.");
         }
-        this.ships = ships;
+        this.barcos = barcos;
         this.esta_vivo = true;
     }
 
     // Getters y Setters
     public ArrayList<Barco> getShips() {
-        return ships;
+        return barcos;
     }
     // Metodo is_alive que devuelve true si el usuario está vivo
 
@@ -56,11 +56,11 @@ public class Usuario {
     // Metodo get_shot que recibe un punto y comprueba si está entre los puntos de inicio
     // y fin de alguno de los barcos del usuario y si está hundido lo elimina.
 
-    public void get_shot(Point shot_point) {
-        for (Barco barco : ships) {
+    public void recibe_disparo(Point shot_point) {
+        for (Barco barco : barcos) {
             barco.recibe_disparo(shot_point);
             if (barco.esta_hundido()) {
-                ships.remove(barco);
+                barcos.remove(barco);
             }
             return;
         }
