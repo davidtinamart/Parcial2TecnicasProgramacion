@@ -5,14 +5,14 @@ import java.awt.*;
 public class Buque extends Barco {
 
     // Atributos
-    private final int isolatedContainers;
-    private int isolatedHits;
+    private final int huecosAislados;
+    private int golpesAislados;
 
     // Metodo constructor
     public Buque(Point start, Point end) {
-        super(5, start, end);
-        this.isolatedContainers = 2;
-        this.isolatedHits = 0;
+        super(5, start, end); // tamaño de 5
+        this.huecosAislados = 2; //huecos aislados que puede haber en el barco
+        this.golpesAislados = 0;
     }
 
     // Metodo get_shot que recibe un punto y comprueba si está entre los puntos de inicio y fin
@@ -20,7 +20,7 @@ public class Buque extends Barco {
         if (esta_entre(inicio, fin, shot_point)) {
             golpes++;
             if (esta_aislado(shot_point)) {
-                isolatedHits++;
+                golpesAislados++;
             }
         }
     }
@@ -46,10 +46,11 @@ public class Buque extends Barco {
         }
     }
 
-    // Metodo is_sunk que devuelve true si el barco está hundido (incluyendo los contenedores aislados)
+    // Metodo esta_hundido (is_sunk) que devuelve true si el barco está hundido
+    // (incluyendo los contenedores aislados)
     @Override
     public boolean esta_hundido() {
-        return golpes == tamano && isolatedHits == isolatedContainers;
+        return golpes == tamano && golpesAislados == huecosAislados;
     }
 
 
