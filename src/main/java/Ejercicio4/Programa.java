@@ -1,6 +1,7 @@
 package Ejercicio4;
 
 import java.awt.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Random;
@@ -8,13 +9,18 @@ import java.util.Random;
 public class Programa {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
+        Scanner teclado2 = new Scanner(System.in);
 
         // Usuario 1
-        System.out.println("Configuración de barcos para el Usuario 1:");
+        System.out.println("--------------------------------------");
+        System.out.println("BIENVENIDO USUARIO 1 -> CONFIGURACION:");
+        System.out.println("--------------------------------------");
         ArrayList<Barco> barcosDeUsuario1 = getUserShips(scanner);
 
         // Usuario 2
-        System.out.println("Configuración de barcos para el Usuario 2:");
+        System.out.println("--------------------------------------");
+        System.out.println("BIENVENIDO USUARIO 2 -> CONFIGURACION:");
+        System.out.println("--------------------------------------");
         ArrayList<Barco> barcosDeUsuario2 = getUserShips(scanner);
 
         // Crear usuarios del juego
@@ -25,67 +31,71 @@ public class Programa {
         Random random = new Random();
         while (usuario1.esta_vivo() && usuario2.esta_vivo() ) {
             // Ataque del Usuario 1 al Usuario 2
-            Point shotPoint1 = getRandomShotPoint(random);
+            Point shotPoint1 = devolverPuntoDisparo(random);
             usuario1.atacar(shotPoint1, usuario2);
 
             // Ataque del Usuario 2 al Usuario 1
-            Point shotPoint2 = getRandomShotPoint(random);
-            usuario2.atacar(shotPoint2, barcosDeUsuario1);
+            Point shotPoint2 = devolverPuntoDisparo(random);
+            usuario2.atacar(shotPoint2, usuario1);
         }
 
-        // Mostrar el ganador
-        if (barcosDeUsuario1.esta_vivo() && !usuario2.esta_vivo()) {
-            System.out.println("¡El Usuario 1 ha ganado!");
-        } else if (!barcosDeUsuario1.esta_vivo() && usuario2.esta_vivo()) {
-            System.out.println("¡El Usuario 2 ha ganado!");
+            // Mostrar ganador o empate en caso de que haya uno de los dos usuarios muerto
+        if (usuario1.esta_vivo() && !usuario2.esta_vivo()) {
+            System.out.println("GANA EL USUARIO 1");
+        } else if (!usuario1.esta_vivo() && usuario2.esta_vivo()) {
+            System.out.println("GANA EL USUARIO 2");
         } else {
-            System.out.println("¡Empate!");
+            System.out.println("HAY UN EMPATE");
         }
     }
 
-    private static ArrayList<Barco> getUserShips(Scanner scanner) {
+    private static ArrayList<Barco> getUserShips(Scanner teclado2) {
+
         ArrayList<Barco> ships = new ArrayList<>();
 
-        System.out.println("Tienes un máximo de 3 barcos en total, uno de cada tipo:");
-        System.out.println("Battleship: 5 casillas, Frigate: 3 casillas, Canoe: 1 casilla");
-        System.out.println("Ingresa las coordenadas de inicio y fin para cada barco o escribe 'no' si no deseas ese tipo de barco.");
+        System.out.println("Dispones de 3 barcos en total, uno de cada tipo de los siguientes:");
+        System.out.println("Un BUQUE ocupa 5 casillas, una FRAGATA ocupa 3 casillas, y una canoa 1 casilla.");
+        System.out.println("------------------------------------------------------------------------------------------------");
 
-        for (String shipType : new String[]{"Battleship", "Frigate", "Canoe"}) {
-            System.out.println("Punto inicial y punto final del " + shipType + " en formato x1 y1 x2 y2 ej(3 2 2 6), o 'no' si no deseas este tipo de barco:");
+        for (String tipoBarco : new String[]{"Buque", "Fragata", "Canoa"}) {
+            System.out.println("Coordenada inicial y final de " + tipoBarco + " en formato x1 y1 x2 y2, o 'no' si no deseas este tipo de barco:");
+            System.out.println("------------------------------------------------------------------------------------------------");
 
-            String input = scanner.next();
+            String input = teclado2.next();
             if (!input.equalsIgnoreCase("no")) {
-                int x1 = Integer.parseInt(input);
-                int y1 = scanner.nextInt();
-                int x2 = scanner.nextInt();
-                int y2 = scanner.nextInt();
-                Point startPoint =
+                System.out.println("Introduzca las coordenadas del barco:");
+                int x1 = teclado2.nextInt();
+                int y1 = teclado2.nextInt();
+                int x2 = teclado2.nextInt();
+                int y2 = teclado2.nextInt();
+                Point puntoInicial =
                         new Point(x1, y1);
-                Point endPoint = new Point(x2, y2);
-                Barco barco;
-                switch (shipType) {
-                    case "Battleship":
-                        barco = new Battleship(startPoint, endPoint);
+                Point puntoFinal = new Point(x2, y2);
+                Barco barcoalmacenado;
+                switch (tipoBarco) {
+                    case "Buque":
+                        barcoalmacenado = new Buque(puntoInicial, puntoFinal);
                         break;
-                    case "Frigate":
-                        barco = new Frigate(startPoint, endPoint);
+                    case "Fragata":
+                        barcoalmacenado = new Fragata(puntoInicial, puntoFinal);
                         break;
-                    case "Canoe":
-                        barco = new Canoe(startPoint, endPoint);
+                    case "Canoa":
+                        barcoalmacenado = new Canoa(puntoInicial, puntoFinal);
                         break;
                     default:
-                        System.out.println("Tipo de barco no válido. Intente de nuevo.");
+                        System.out.println(" ¡Error! Tipo de barco desconocido. Intente de nuevo.");
                         continue;
                 }
-                ships.add(barco);
+                ships.add(barcoalmacenado);
             }
         }
         return ships;
     }
 
-    private static Point getRandomShotPoint(Random random) {
-        int x = random.nextInt(10);
-        int y = random.nextInt(10);
+    // Devuelve un punto aleatorio para disparar en el tablero de 10x10 (0,0) a (9,9)
+    private static Point devolverPuntoDisparo(Random azar) {
+        int x = azar.nextInt(10);
+        int y = azar.nextInt(10);
         return new Point(x, y);
     }
 }
