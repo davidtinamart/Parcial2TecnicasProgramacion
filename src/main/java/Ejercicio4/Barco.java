@@ -39,19 +39,19 @@ public class Barco {
     }
 
     // Metodo is_sunk que devuelve true si el barco está hundido
-    public boolean is_sunk() {
+    public boolean esta_hundido() {
         return golpes == tamano; // si el numero de hits es igual al tamaño del barco, el barco está hundido
     }
 
     // Metodo get_shot que recibe un punto y comprueba si está entre los puntos de inicio y fin
-    public void get_shot(Point shot_point) {
-        if (is_between(inicio, fin, shot_point)) {
+    public void recibe_disparo(Point shot_point) {
+        if (esta_entre(inicio, fin, shot_point)) {
             golpes++;
         }
     }
 
     //  Metodo is_between que recibe dos puntos y un punto y comprueba si el punto está entre los dos puntos
-    public boolean is_between(Point start, Point end, Point p) {
+    public boolean esta_entre(Point start, Point end, Point p) {
         return (p.getX() >= start.getX() && p.getX() <= end.getX() || p.getX() >= end.getX() && p.getX() <= start.getX())
                 && (p.getY() >= start.getY()
 
