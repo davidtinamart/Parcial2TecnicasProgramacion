@@ -8,7 +8,8 @@ public class Buque extends Barco {
     private final int huecosAislados;
     private int golpesAislados;
 
-    // Metodo constructor
+    // Metodo constructor de la clase Buque que recibe dos puntos (inicio y fin)
+    // y llama al constructor de la clase padre Barco
     public Buque(Point start, Point end) {
         super(5, start, end); // tamaño de 5
         this.huecosAislados = 2; //huecos aislados que puede haber en el barco
@@ -25,7 +26,8 @@ public class Buque extends Barco {
         }
     }
 
-    // método auxiliar para comprobar si un punto es una posición aislada del Battleship
+    // Metodo esta_aislado que recibe un punto y comprueba si está aislado de los puntos de inicio y fin del barco
+    // (si está en una esquina) y devuelve true si está aislado y false si no lo está.
     private boolean esta_aislado(Point p) {
         int x = (int) p.getX();
         int y = (int) p.getY();
