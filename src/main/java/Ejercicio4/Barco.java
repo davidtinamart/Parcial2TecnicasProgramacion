@@ -10,31 +10,32 @@ public class Barco {
     protected Point fin;
 
     // Constructor
-    public Barco(int size, Point inicio, Point fin) {
-        this.tamano = size;
+    public Barco(int tamano, Point inicio, Point fin) {
+
+        this.tamano = tamano;
         this.golpes = 0;
         this.inicio = inicio;
         this.fin = fin;
     }
 
     // Getters y Setters
-    public int getSize() {
+    public int dameTamano() {
         return tamano;
     }
 
-    public int getHits() {
+    public int dameGolpes() {
         return golpes;
     }
 
-    public Point getStart() {
+    public Point dameInicio() {
         return inicio;
     }
 
-    public Point getEnd() {
+    public Point dameFin() {
         return fin;
     }
 
-    public void setHits(int golpes) {
+    public void setGolpes(int golpes) {
         this.golpes = golpes;
     }
 
